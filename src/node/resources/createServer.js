@@ -2,10 +2,9 @@
 
 const express = require('express'),
   conf = require('../conf/app.conf'),
-  glob = require('glob'),
+  requireDir = require('require-dir'),
   path = require('path'),
   bunyan = require('bunyan'),
-  bodyParser = require('body-parser'),
   app = express(),
   log = bunyan.createLogger({
     name: 'createServer.js',
@@ -13,47 +12,48 @@ const express = require('express'),
   });
 
 module.exports = () => {
-  app.disable('x-powered-by');
-
-  app.use(bodyParser.json());
+  const middleware = requireDir(conf.express.middlewarePath, {
+      extensions: ['.js']
+    }),
+    routes = requireDir(conf.express.routesPath, { extensions: ['.js'] });
 
   // load middleware and add to app
-  glob.sync(conf.express.middlewarePath).forEach(file => {
-    log.debug('Adding middleware at', file);
-    app.use(require(path.resolve(file)));
-  });
+  Object.keys(middleware)
+    .map(key => {
+      middleware[key].name = key;
+      return middleware[key];
+    })
+    .sort((a, b) => a.priority - b.priority)
+    .forEach(middleware => {
+      log.debug(`adding ${middleware.name} middleware`);
+      app.use(middleware.use);
+    });
 
   // Point static path to dist
   app.use(express.static(path.join(__dirname, conf.express.staticFolder)));
 
   // load route handlers
-  glob.sync(conf.express.routesPath).forEach(file => {
-    const router = express.Router(),
-      route = require(path.resolve(file)),
-      apiRoutesPrefix = conf.express.apiRoutesPrefix || '';
+  Object.keys(routes)
+    .map(key => {
+      routes[key].name = key;
+      return routes[key];
+    })
+    .forEach(route => {
+      const router = express.Router(),
+        apiRoutesPrefix = conf.express.apiRoutesPrefix || '';
 
-    route.handler(router);
+      route.handler(router);
 
-    log.debug(`Adding route ${file} at path ${apiRoutesPrefix}${route.path}`);
+      log.debug(
+        `Adding route ${route.name} at path ${apiRoutesPrefix}${route.path}`
+      );
 
-    app.use(`${apiRoutesPrefix}${route.path}`, router);
-  });
+      app.use(`${apiRoutesPrefix}${route.path}`, router);
+    });
 
   // Catch all other routes and return the index file
   app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, conf.express.indexPath));
-  });
-
-  // define generic error handling middleware to prevent stack trace leak
-  app.use((err, req, res, next) => {
-    log.error(
-      `Unable to process ${req.method} request ${req.headers.reqid} to ${
-        req.originalUrl
-      }`,
-      err
-    );
-    res.status(err.status || 500).send([{ error: err.message }]);
-    next(err);
   });
 
   return app;

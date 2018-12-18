@@ -1,6 +1,6 @@
 'use strict';
 
-const { query, validationResult } = require('express-validator/check');
+const { body, query, validationResult } = require('express-validator/check');
 
 class HelloRoute {
   constructor(router) {
@@ -15,14 +15,37 @@ class HelloRoute {
       ],
       this.getHelloMessage
     );
+
+    router.post(
+      '/',
+      [
+        body('name')
+          .exists()
+          .withMessage('name param must be provided')
+          .isLength({ min: 1, max: 50 })
+          .withMessage('name param must be between 1 and 50 characters')
+      ],
+      this.postHelloMessage
+    );
   }
 
   getHelloMessage(req, res) {
     const errors = validationResult(req);
+
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.mapped() });
     } else {
       return res.json({ msg: `Hello, ${req.query.name}!` });
+    }
+  }
+
+  postHelloMessage(req, res) {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.mapped() });
+    } else {
+      return res.json({ msg: `Hello, ${req.body.name}!` });
     }
   }
 }
