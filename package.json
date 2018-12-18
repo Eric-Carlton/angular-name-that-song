@@ -10,6 +10,7 @@
     "lint": "ng lint",
     "lint:node": "eslint --fix 'src/node/**/*.{js,json}'",
     "prettier:node": "prettier --write 'src/node/**/*.{js,json}'",
+    "prettier:angular": "prettier --write 'src/app/**/*.{ts,json,md,html}'",
     "e2e": "ng e2e"
   },
   "private": true,
@@ -67,6 +68,8 @@
     }
   },
   "lint-staged": {
-    "src/node/**/*.{js,json}": ["eslint --fix", "prettier --write", "git add"]
+    "src/node/**/*.{js,json}": ["eslint --fix", "prettier --write", "git add"],
+    "src/app/**/*.ts}": ["tslint --fix", "prettier --write", "git add"],
+    "src/app/**/*.{ts,json,md,html}": ["prettier --write", "git add"]
   }
 }
