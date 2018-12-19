@@ -2,7 +2,10 @@
 
 const conf = require('../conf/app.conf'),
   bunyan = require('bunyan'),
-  log = bunyan.createLogger({ name: 'cors.js', level: conf.log.level });
+  log = bunyan.createLogger({
+    name: 'requestLogger.js',
+    level: conf.log.level
+  });
 
 module.exports = {
   priority: 1,

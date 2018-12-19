@@ -3,7 +3,7 @@
 const conf = require('../conf/app.conf'),
   bunyan = require('bunyan'),
   log = bunyan.createLogger({
-    name: 'genericErrorHandler.js',
+    name: 'csurfErrorHandler.js',
     level: conf.log.level
   });
 
