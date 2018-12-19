@@ -32,7 +32,7 @@
     "express": "^4.16.4",
     "express-validator": "^5.3.0",
     "helmet": "^3.15.0",
-    "require-dir": "^1.2.0",
+    "require-dir-all": "^0.4.15",
     "rxjs": "~6.3.3",
     "tslib": "^1.9.0",
     "zone.js": "~0.8.26"

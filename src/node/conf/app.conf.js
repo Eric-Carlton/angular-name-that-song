@@ -3,11 +3,13 @@
 module.exports = {
   express: {
     port: 3000,
-    middlewarePath: '../middleware',
-    routesPath: '../routes',
+    middlewarePath: 'middleware',
+    routesPath: 'routes',
     apiRoutesPrefix: '/api',
-    staticFolder: '../../../dist',
-    indexPath: '../../../dist/index.html'
+    static: {
+      folder: '../../dist',
+      index: 'index.html'
+    }
   },
   cors: {
     allowedOrigins: [''],

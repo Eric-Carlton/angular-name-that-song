@@ -2,7 +2,7 @@
 
 const express = require('express'),
   conf = require('../conf/app.conf'),
-  requireDir = require('require-dir'),
+  requireDir = require('require-dir-all'),
   path = require('path'),
   bunyan = require('bunyan'),
   app = express(),
@@ -12,10 +12,19 @@ const express = require('express'),
   });
 
 module.exports = () => {
-  const middleware = requireDir(conf.express.middlewarePath, {
-      extensions: ['.js']
-    }),
-    routes = requireDir(conf.express.routesPath, { extensions: ['.js'] });
+  const middleware = requireDir(
+      path.join(
+        path.dirname(require.main.filename),
+        conf.express.middlewarePath
+      ),
+      {
+        extensions: ['.js']
+      }
+    ),
+    routes = requireDir(
+      path.join(path.dirname(require.main.filename), conf.express.routesPath),
+      { extensions: ['.js'] }
+    );
 
   // load middleware and add to app
   Object.keys(middleware)
@@ -28,9 +37,6 @@ module.exports = () => {
       log.debug(`adding ${middleware.name} middleware`);
       app.use(middleware.use);
     });
-
-  // Point static path to dist
-  app.use(express.static(path.join(__dirname, conf.express.staticFolder)));
 
   // load route handlers
   Object.keys(routes)
@@ -51,10 +57,27 @@ module.exports = () => {
       app.use(`${apiRoutesPrefix}${route.path}`, router);
     });
 
-  // Catch all other routes and return the index file
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, conf.express.indexPath));
-  });
+  if (conf.express.static) {
+    // Point static path to dist
+    app.use(
+      express.static(
+        path.join(
+          path.dirname(require.main.filename),
+          conf.express.static.folder
+        )
+      )
+    );
+
+    // Catch all other routes and return the index file
+    app.get('*', (req, res) => {
+      res.sendFile(
+        path.join(
+          path.dirname(require.main.filename),
+          path.join(conf.express.static.folder, conf.express.static.index)
+        )
+      );
+    });
+  }
 
   return app;
 };
