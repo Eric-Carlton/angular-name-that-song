@@ -30,7 +30,7 @@ module.exports = {
       stdTTL: 3600
     },
     recommendationsCacheOpts: {
-      standardTTL: 3600
+      standardTTL: 1800
     },
     tokenEndpoint: 'https://accounts.spotify.com/api/token',
     tokenCacheKey: 'token',
