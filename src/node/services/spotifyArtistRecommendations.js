@@ -92,10 +92,14 @@ class SpotifyArtistRecommendations {
       const tracks = jsonpath
         .query(body, '$.tracks')[0]
         .map(track => {
+          log.trace(JSON.stringify(track, null, 2));
           return {
             artist: jsonpath.query(track, '$.artists..name')[0],
             name: jsonpath.query(track, '$.name')[0],
-            previewUrl: jsonpath.query(track, '$.preview_url')[0]
+            previewUrl: jsonpath.query(track, '$.preview_url')[0],
+            album: jsonpath.query(track, '$.album.name')[0],
+            // medium sized art is always second in array
+            albumArt: jsonpath.query(track, '$.album.images[1]')[0].url
           };
         })
         .filter(track => track.previewUrl);
