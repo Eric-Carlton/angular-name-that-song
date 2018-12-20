@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "node ./src/node/app.js | bunyan",
+    "start": "ng build && node ./src/node/app.js | bunyan",
     "start:dev": "nodemon ./src/node/app.js | bunyan",
     "build": "ng build",
     "test": "ng test",
@@ -27,6 +27,7 @@
     "@angular/router": "~7.1.0",
     "body-parser": "^1.18.3",
     "bunyan": "^1.8.12",
+    "class-transformer": "^0.2.0",
     "cookie-parser": "^1.4.3",
     "core-js": "^2.5.4",
     "cors": "^2.8.5",

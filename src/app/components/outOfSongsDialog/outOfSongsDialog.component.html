@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>Out of Songs!</h1>
+<div mat-dialog-content>
+  You have exhausted the current playlist. Would you like to continue this game
+  by creating another playlist?
+</div>
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="true">No, declare winner</button>
+  <button mat-button (click)="navigateToPlaylistCreation()" cdkFocusInitial>
+    Yes
+  </button>
+</div>

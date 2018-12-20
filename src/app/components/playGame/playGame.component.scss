@@ -1,0 +1,21 @@
+.scoring {
+    table {
+        width: 100%;
+    
+        td, th {
+            text-align: center;
+        }
+    }
+}
+
+.now-playing {
+    mat-card {
+        text-align: center;
+    }
+
+    .btn-start-game {
+        display: block;
+        margin: 3em auto;
+        width: 100%;
+    }
+}
