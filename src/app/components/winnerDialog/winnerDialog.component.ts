@@ -23,6 +23,19 @@ export class WinnerDialogComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.playWinningSound();
+    this.determineContent();
+  }
+
+  playWinningSound() {
+    const audioPlayer: HTMLAudioElement = new Audio();
+
+    audioPlayer.src = '../../../assets/winner.mp3';
+    audioPlayer.load();
+    audioPlayer.play();
+  }
+
+  determineContent() {
     if (this.data.winners.length > 1) {
       this.content = `It was a tie between `;
 

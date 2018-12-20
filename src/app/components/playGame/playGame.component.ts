@@ -60,7 +60,8 @@ export class PlayGameComponent implements OnInit {
         JSON.stringify(this.players.data)
       ).sort((a, b) => b.score - a.score),
       firstPlace: number = sortedPlayers[0].score,
-      secondPlace: number = sortedPlayers[1].score,
+      // allow for one player games because that's not limited anywhere else
+      secondPlace: number = sortedPlayers[1] ? sortedPlayers[1].score : 0,
       winningPlayers: Player[] = this.players.data.filter(
         player => player.score === firstPlace
       );
@@ -105,10 +106,6 @@ export class PlayGameComponent implements OnInit {
 
   openWinnerDialog(winners: Player[]) {
     this.audioPlayer.pause();
-
-    this.audioPlayer.src = '../../../assets/winner.mp3';
-    this.audioPlayer.load();
-    this.audioPlayer.play();
 
     this.dialog.open(
       WinnerDialogComponent,
