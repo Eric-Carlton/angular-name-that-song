@@ -84,7 +84,7 @@ class SpotifySearchArtist {
   mapper(err, res, body, resolve, reject, cacheKey) {
     log.debug(
       `Spotify artist search response for ${this.reqid}`,
-      { status: res.statusCode },
+      { status: res ? res.statusCode : undefined },
       { res: body }
     );
 

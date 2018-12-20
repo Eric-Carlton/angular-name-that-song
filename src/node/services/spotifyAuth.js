@@ -68,7 +68,7 @@ class SpotifyAuth {
   mapper(err, res, body, resolve, reject) {
     log.debug(
       `Spotify token response for ${this.reqid}`,
-      { status: res.statusCode },
+      { status: res ? res.statusCode : undefined },
       { res: body }
     );
 

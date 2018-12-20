@@ -84,7 +84,7 @@ class SpotifyArtistRecommendations {
   mapper(err, res, body, resolve, reject, cacheKey) {
     log.debug(
       `Spotify recommendations response for ${this.reqid}`,
-      { status: res.statusCode },
+      { status: res ? res.statusCode : undefined },
       { res: body }
     );
 
