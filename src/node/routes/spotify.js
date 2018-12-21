@@ -36,7 +36,9 @@ class SpotifyRoute {
           const recommendationsSrvc = new SpotifyArtistRecommendations(
               req.headers.reqid
             ),
-            artistIds = artistIdsArr.join(',');
+            artistIds = artistIdsArr
+              .filter(artist => artist && artist.length > 0)
+              .join(',');
 
           return recommendationsSrvc.getRecommendationsForArtistId(artistIds);
         } else {

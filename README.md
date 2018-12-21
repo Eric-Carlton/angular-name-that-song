@@ -68,7 +68,7 @@ Click "Start Game" in the Now Playing section to begin the game. The first song 
 
 Once the game has been started, the Now Playing section shows: 
 
-* The current song's title and artist ( separated by a "-" )
+* The current song's title and artist ( separated by a "/" )
     * Clicking on this will pause the song and open a new tab to the Spotify page for the current song
 * The name of the album that the current song appears on
 * Album art
