@@ -71,6 +71,9 @@
       <img [src]="currentSong.albumArtUrl" />
     </mat-card-content>
     <mat-card-actions>
+      <button mat-raised-button (click)="togglePause()">
+        <span>{{ togglePauseText }}</span>
+      </button>
       <button mat-raised-button (click)="startNextSong()" color="primary">
         Next Song!
       </button>

@@ -24,6 +24,7 @@ export class PlayGameComponent implements OnInit {
     width: '40%',
     disableClose: true
   };
+  togglePauseText = '';
 
   constructor(
     private playersService: PlayersService,
@@ -39,6 +40,18 @@ export class PlayGameComponent implements OnInit {
         this.audioPlayer.pause();
       }
     });
+
+    this.audioPlayer.onplay = () => {
+      this.togglePauseText = 'Pause';
+    };
+
+    this.audioPlayer.onpause = () => {
+      this.togglePauseText = 'Play';
+    };
+
+    this.audioPlayer.onended = () => {
+      this.togglePauseText = 'Replay';
+    };
   }
 
   getPlayers() {
@@ -94,6 +107,14 @@ export class PlayGameComponent implements OnInit {
         this.openOutOfSongsDialog();
       }
     });
+  }
+
+  togglePause() {
+    if (this.audioPlayer.paused) {
+      this.audioPlayer.play();
+    } else {
+      this.audioPlayer.pause();
+    }
   }
 
   openOutOfSongsDialog() {
