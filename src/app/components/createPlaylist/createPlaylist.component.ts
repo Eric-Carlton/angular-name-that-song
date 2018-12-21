@@ -3,6 +3,8 @@ import { MatTableDataSource } from '@angular/material/table';
 
 import { Song } from '../../models/song.model';
 import { PlaylistService } from 'app/services/playlist.service';
+import { finalize } from 'rxjs/operators';
+import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-create-playlist',
@@ -14,7 +16,10 @@ export class CreatePlaylistComponent implements OnInit {
   artist = '';
   loading = false;
 
-  constructor(private playlistService: PlaylistService) {}
+  constructor(
+    private playlistService: PlaylistService,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit() {
     this.clearPlaylist();
@@ -31,11 +36,21 @@ export class CreatePlaylistComponent implements OnInit {
 
     if (this.artist) {
       this.loading = true;
-      this.playlistService.createPlaylist(this.artist).subscribe(playlist => {
-        this.playlist.data = playlist;
-
-        this.loading = false;
-      });
+      this.playlistService
+        .createPlaylist(this.artist)
+        .pipe(
+          finalize(() => {
+            this.loading = false;
+          })
+        )
+        .subscribe(
+          playlist => {
+            this.playlist.data = playlist;
+          },
+          () => {
+            this.showError();
+          }
+        );
     }
   }
 
@@ -43,5 +58,16 @@ export class CreatePlaylistComponent implements OnInit {
     this.playlistService
       .deleteSong(song)
       .subscribe(playlist => (this.playlist.data = playlist));
+  }
+
+  showError() {
+    const snackBar: MatSnackBarRef<SimpleSnackBar> = this.snackBar.open(
+      'Oops! Unable to retrieve a playlist for that artist',
+      'Retry'
+    );
+
+    snackBar.onAction().subscribe(() => {
+      this.createPlaylist();
+    });
   }
 }

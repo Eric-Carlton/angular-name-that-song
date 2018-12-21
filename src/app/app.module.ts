@@ -10,7 +10,8 @@ import {
   MatTableModule,
   MatToolbarModule,
   MatProgressSpinnerModule,
-  MatDialogModule
+  MatDialogModule,
+  MatSnackBarModule
 } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 
@@ -44,7 +45,8 @@ import { WinnerDialogComponent } from './components/winnerDialog/winnerDialog.co
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
-    MatCardModule
+    MatCardModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router, NavigationStart } from '@angular/router';
 
 import { PlayersService } from '../../services/players.service';
 import { PlaylistService } from '../../services/playlist.service';
@@ -27,11 +28,17 @@ export class PlayGameComponent implements OnInit {
   constructor(
     private playersService: PlayersService,
     private playlistService: PlaylistService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private router: Router
   ) {}
 
   ngOnInit() {
     this.getPlayers();
+    this.router.events.subscribe(evt => {
+      if (evt instanceof NavigationStart) {
+        this.audioPlayer.pause();
+      }
+    });
   }
 
   getPlayers() {
@@ -92,7 +99,7 @@ export class PlayGameComponent implements OnInit {
   openOutOfSongsDialog() {
     this.audioPlayer.pause();
 
-    const dialogRef = this.dialog.open(
+    const dialogRef: MatDialogRef<OutOfSongsDialogComponent> = this.dialog.open(
       OutOfSongsDialogComponent,
       this.dialogConfig
     );
