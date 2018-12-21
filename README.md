@@ -50,7 +50,7 @@ When all players have been added, click "Finished Adding Players" to continue to
 
 ![Create Playlist Page](screenshots/create-playlist-page.png?raw=true)
 
-Provide up to 5 seed artists in the text input. Separate each artist with a comma. Click "Create Playlist" to query Spotify for recommendations based on that artist(s).
+Provide up to 5 seed artists in the text input. Separate each artist with a comma. Click "Create Playlist" to query Spotify for recommendations based on artist(s).
 
 You can remove individual songs by clicking the "Remove" button in the same row as the song's name. 
 
