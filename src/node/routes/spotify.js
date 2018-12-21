@@ -1,7 +1,13 @@
 'use strict';
 
-const SpotifySearchArtist = require('../services/spotifySearchArtist'),
-  SpotifyArtistRecommendations = require('../services/spotifyArtistRecommendations');
+const conf = require('../conf/app.conf'),
+  SpotifySearchArtist = require('../services/spotifySearchArtist'),
+  SpotifyArtistRecommendations = require('../services/spotifyArtistRecommendations'),
+  bunyan = require('bunyan'),
+  log = bunyan.createLogger({
+    name: 'spotify.js',
+    level: conf.log.level
+  });
 
 class SpotifyRoute {
   constructor(router) {
@@ -21,17 +27,26 @@ class SpotifyRoute {
 
           return recommendationsSrvc.getRecommendationsForArtistId(artistId);
         } else {
-          res.sendStatus(404);
+          const e = new Error('No artist found');
+          e.status = 404;
+
+          throw e;
         }
       })
       .then(recommendations => {
         if (recommendations && recommendations.length > 0) {
           res.json(recommendations);
         } else {
-          res.sendStatus(404);
+          const e = new Error('No recommendations found');
+          e.status = 404;
+
+          throw e;
         }
       })
-      .catch(e => res.status(500).json({ error: e.message }));
+      .catch(e => {
+        log.error(e);
+        return res.status(e.status || 500).json({ error: e.message });
+      });
   }
 }
 

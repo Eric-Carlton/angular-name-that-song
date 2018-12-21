@@ -15,6 +15,7 @@ export class CreatePlaylistComponent implements OnInit {
   playlist: MatTableDataSource<Song> = new MatTableDataSource<Song>();
   artist = '';
   loading = false;
+  errorMessage: MatSnackBarRef<SimpleSnackBar>;
 
   constructor(
     private playlistService: PlaylistService,
@@ -33,6 +34,9 @@ export class CreatePlaylistComponent implements OnInit {
 
   createPlaylist() {
     this.artist = this.artist.trim();
+    if (this.snackBar) {
+      this.snackBar.dismiss();
+    }
 
     if (this.artist) {
       this.loading = true;
@@ -61,12 +65,15 @@ export class CreatePlaylistComponent implements OnInit {
   }
 
   showError() {
-    const snackBar: MatSnackBarRef<SimpleSnackBar> = this.snackBar.open(
+    this.errorMessage = this.snackBar.open(
       'Oops! Unable to retrieve a playlist for that artist',
-      'Retry'
+      'Retry',
+      {
+        duration: 5000
+      }
     );
 
-    snackBar.onAction().subscribe(() => {
+    this.errorMessage.onAction().subscribe(() => {
       this.createPlaylist();
     });
   }
