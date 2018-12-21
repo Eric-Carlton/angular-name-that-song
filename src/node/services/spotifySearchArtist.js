@@ -10,7 +10,7 @@ const conf = require('../conf/app.conf'),
     name: 'spotifySearchArtist.js',
     level: conf.log.level
   }),
-  SpotifyAuth = require('./spotifyAuth');
+  authService = require('./spotifyAuth');
 
 class SpotifySearchArtist {
   constructor(reqid) {
@@ -66,10 +66,8 @@ class SpotifySearchArtist {
     );
 
     return new Promise((resolve, reject) => {
-      const authService = new SpotifyAuth(this.reqid);
-
       authService
-        .getToken()
+        .getToken(this.reqid)
         .then(authHeader => {
           options.headers['Authorization'] = authHeader;
 

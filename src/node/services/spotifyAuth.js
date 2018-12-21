@@ -12,20 +12,30 @@ const privateConf = require('../conf/private.conf'),
   });
 
 class SpotifyAuth {
-  constructor(reqid) {
-    this.reqid = reqid;
+  constructor() {
+    this.retrieveTokenPromise;
   }
 
-  getToken() {
-    log.debug(`Spotify token requested for ${this.reqid}`);
+  getToken(reqid) {
+    log.debug(`Spotify token requested for ${reqid}`);
 
     const cachedToken = tokenCache.get(conf.spotify.tokenCacheKey);
 
     if (cachedToken) {
-      log.debug(`returning cached Spotify token for ${this.reqid}`);
+      log.debug(`returning cached Spotify token for ${reqid}`);
       return Promise.resolve(cachedToken);
     } else {
-      return this.call(this.getOptions(this.getHeaders(), this.getBody()));
+      if (!this.retrieveTokenPromise) {
+        log.debug(`making request for spotify token for ${reqid}`);
+        this.retrieveTokenPromise = this.call(
+          this.getOptions(this.getHeaders(), this.getBody()),
+          reqid
+        );
+      } else {
+        log.debug(`waiting on spotify token response for ${reqid}`);
+      }
+
+      return this.retrieveTokenPromise;
     }
   }
 
@@ -55,19 +65,23 @@ class SpotifyAuth {
     };
   }
 
-  call(options) {
-    log.debug(`Making Spotify token request for ${this.reqid}`, options);
+  call(options, reqid) {
+    log.debug(`Making Spotify token request for ${reqid}`, options);
 
-    return new Promise((resolve, reject) => {
+    this.retrieveTokenPromise = new Promise((resolve, reject) => {
       request(options, (err, res, body) => {
-        this.mapper(err, res, body, resolve, reject);
+        this.mapper(err, res, body, resolve, reject, reqid);
       });
     });
+
+    return this.retrieveTokenPromise;
   }
 
-  mapper(err, res, body, resolve, reject) {
+  mapper(err, res, body, resolve, reject, reqid) {
+    this.retrieveTokenPromise = null;
+
     log.debug(
-      `Spotify token response for ${this.reqid}`,
+      `Spotify token response for ${reqid}`,
       { status: res ? res.statusCode : undefined },
       { res: body }
     );
@@ -78,10 +92,10 @@ class SpotifyAuth {
       tokenCache.set(conf.spotify.tokenCacheKey, token);
       resolve(token);
     } else {
-      log.error(`Error retrieving Spotify token for ${this.reqid}`, err, body);
+      log.error(`Error retrieving Spotify token for ${reqid}`, err, body);
       reject(new Error('Unable to get Spotify token'));
     }
   }
 }
 
-module.exports = SpotifyAuth;
+module.exports = new SpotifyAuth();
