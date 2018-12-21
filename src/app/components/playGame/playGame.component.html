@@ -63,9 +63,15 @@
     Start Game
   </button>
   <mat-card *ngIf="currentSong">
-    <mat-card-title
-      >{{ currentSong.name }} - {{ currentSong.artist }}</mat-card-title
-    >
+    <mat-card-title>
+      <a
+        [href]="currentSong.songUrl"
+        target="_blank"
+        (click)="audioPlayer.pause()"
+        >{{ currentSong.name }} - {{ currentSong.artist }}</a
+      >
+      <sup><mat-icon svgIcon="open-in-new"></mat-icon></sup>
+    </mat-card-title>
     <mat-card-subtitle>{{ currentSong.album }}</mat-card-subtitle>
     <mat-card-content>
       <img [src]="currentSong.albumArtUrl" />

@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, DomSanitizer } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
@@ -11,7 +11,9 @@ import {
   MatToolbarModule,
   MatProgressSpinnerModule,
   MatDialogModule,
-  MatSnackBarModule
+  MatSnackBarModule,
+  MatIconRegistry,
+  MatIconModule
 } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 
@@ -46,10 +48,17 @@ import { WinnerDialogComponent } from './components/winnerDialog/winnerDialog.co
     MatFormFieldModule,
     MatInputModule,
     MatCardModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent],
   entryComponents: [OutOfSongsDialogComponent, WinnerDialogComponent]
 })
-export class AppModule {}
+export class AppModule {
+  constructor(matIconRegistry: MatIconRegistry, domSanitizer: DomSanitizer) {
+    matIconRegistry.addSvgIconSet(
+      domSanitizer.bypassSecurityTrustResourceUrl('./assets/mdi.svg')
+    );
+  }
+}

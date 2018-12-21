@@ -25,6 +25,7 @@
     "@angular/platform-browser": "~7.1.0",
     "@angular/platform-browser-dynamic": "~7.1.0",
     "@angular/router": "~7.1.0",
+    "@mdi/angular-material": "^3.2.89",
     "body-parser": "^1.18.3",
     "bunyan": "^1.8.12",
     "class-transformer": "^0.2.0",
