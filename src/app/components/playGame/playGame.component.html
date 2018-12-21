@@ -1,3 +1,38 @@
+<section class="now-playing">
+  <h2>Now Playing</h2>
+  <button
+    class="btn-start-game"
+    mat-raised-button
+    (click)="startNextSong()"
+    *ngIf="!currentSong"
+    color="primary"
+  >
+    Start Game
+  </button>
+  <mat-card *ngIf="currentSong">
+    <mat-card-title>
+      <a
+        [href]="currentSong.songUrl"
+        target="_blank"
+        (click)="audioPlayer.pause()"
+        >{{ currentSong.name }} - {{ currentSong.artist }}</a
+      >
+      <sup><mat-icon svgIcon="open-in-new"></mat-icon></sup>
+    </mat-card-title>
+    <mat-card-subtitle>{{ currentSong.album }}</mat-card-subtitle>
+    <mat-card-content>
+      <img [src]="currentSong.albumArtUrl" />
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button (click)="togglePause()">
+        <span>{{ togglePauseText }}</span>
+      </button>
+      <button mat-raised-button (click)="startNextSong()" color="primary">
+        Next Song!
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</section>
 <section class="scoring">
   <h2>Scoring</h2>
   <table mat-table [dataSource]="players" class="mat-elevation-z8">
@@ -50,39 +85,4 @@
       "
     ></tr>
   </table>
-</section>
-<section class="now-playing">
-  <h2>Now Playing</h2>
-  <button
-    class="btn-start-game"
-    mat-raised-button
-    (click)="startNextSong()"
-    *ngIf="!currentSong"
-    color="primary"
-  >
-    Start Game
-  </button>
-  <mat-card *ngIf="currentSong">
-    <mat-card-title>
-      <a
-        [href]="currentSong.songUrl"
-        target="_blank"
-        (click)="audioPlayer.pause()"
-        >{{ currentSong.name }} - {{ currentSong.artist }}</a
-      >
-      <sup><mat-icon svgIcon="open-in-new"></mat-icon></sup>
-    </mat-card-title>
-    <mat-card-subtitle>{{ currentSong.album }}</mat-card-subtitle>
-    <mat-card-content>
-      <img [src]="currentSong.albumArtUrl" />
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-raised-button (click)="togglePause()">
-        <span>{{ togglePauseText }}</span>
-      </button>
-      <button mat-raised-button (click)="startNextSong()" color="primary">
-        Next Song!
-      </button>
-    </mat-card-actions>
-  </mat-card>
 </section>
