@@ -22,17 +22,18 @@ class SpotifyAuth {
     const cachedToken = tokenCache.get(conf.spotify.tokenCacheKey);
 
     if (cachedToken) {
-      log.debug(`returning cached Spotify token for ${reqid}`);
+      log.debug(`Returning cached Spotify token for ${reqid}`);
       return Promise.resolve(cachedToken);
     } else {
       if (!this.retrieveTokenPromise) {
-        log.debug(`making request for spotify token for ${reqid}`);
+        log.debug(`Making request for Spotify token for ${reqid}`);
+
         this.retrieveTokenPromise = this.call(
           this.getOptions(this.getHeaders(), this.getBody()),
           reqid
         );
       } else {
-        log.debug(`waiting on spotify token response for ${reqid}`);
+        log.debug(`Waiting on Spotify token response for ${reqid}`);
       }
 
       return this.retrieveTokenPromise;
@@ -68,13 +69,11 @@ class SpotifyAuth {
   call(options, reqid) {
     log.debug(`Making Spotify token request for ${reqid}`, options);
 
-    this.retrieveTokenPromise = new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       request(options, (err, res, body) => {
         this.mapper(err, res, body, resolve, reject, reqid);
       });
     });
-
-    return this.retrieveTokenPromise;
   }
 
   mapper(err, res, body, resolve, reject, reqid) {
