@@ -36,9 +36,9 @@ This application gives the ability to enter the names of all players, select an 
 
 ## Usage
 
-### Add Users
+### Add Players
 
-![Add Users Page](screenshots/add-users-page.png?raw=true)
+![Add Players Page](screenshots/add-players-page.png?raw=true)
 
 Add players by typing the player's name in the text input and clicking the "Add" button.
 
@@ -86,7 +86,7 @@ Once a player has reached at least five points with a two point lead, a dialog d
 
 ![Play Game Page Winner Dialog](screenshots/play-game-page-winner-dialog.png?raw=true)
 
-Clicking "New Game" here will take you back to the Add Users page, resetting users, scores, and the playlist.
+Clicking "New Game" here will take you back to the Add Players page, resetting players, scores, and the playlist.
 
 If the playlist is exhausted, a dialog will be displayed asking if you'd like to create a new playlist or declare a winner.
 
