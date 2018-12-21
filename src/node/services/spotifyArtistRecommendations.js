@@ -92,7 +92,6 @@ class SpotifyArtistRecommendations {
       const tracks = jsonpath
         .query(body, '$.tracks')[0]
         .map(track => {
-          log.trace(JSON.stringify(track, null, 2));
           return {
             artist: jsonpath.query(track, '$.artists..name')[0],
             name: jsonpath.query(track, '$.name')[0],
