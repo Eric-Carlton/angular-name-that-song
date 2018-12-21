@@ -11,21 +11,34 @@ const conf = require('../conf/app.conf'),
 
 class SpotifyRoute {
   constructor(router) {
-    router.get('/playlist/:artist', this.getSpotifyPlaylistForArtist);
+    router.get('/playlist/:artists', this.getSpotifyPlaylistForArtist);
   }
 
   getSpotifyPlaylistForArtist(req, res) {
-    const searchArtistSrvc = new SpotifySearchArtist(req.headers.reqid);
+    const artists = req.params.artists.split(','),
+      searchArtistSrvc = new SpotifySearchArtist(req.headers.reqid),
+      promises = [];
 
-    searchArtistSrvc
-      .getIdForArtist(req.params.artist)
-      .then(artistId => {
-        if (artistId) {
+    if (artists.length > 5) {
+      const e = new Error('Too many artists');
+      e.status = 400;
+
+      throw e;
+    } else {
+      artists.forEach(artist => {
+        promises.push(searchArtistSrvc.getIdForArtist(artist.trim()));
+      });
+    }
+
+    Promise.all(promises)
+      .then(artistIdsArr => {
+        if (artistIdsArr && artistIdsArr.length > 0) {
           const recommendationsSrvc = new SpotifyArtistRecommendations(
-            req.headers.reqid
-          );
+              req.headers.reqid
+            ),
+            artistIds = artistIdsArr.join(',');
 
-          return recommendationsSrvc.getRecommendationsForArtistId(artistId);
+          return recommendationsSrvc.getRecommendationsForArtistId(artistIds);
         } else {
           const e = new Error('No artist found');
           e.status = 404;

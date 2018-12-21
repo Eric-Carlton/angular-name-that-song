@@ -6,7 +6,7 @@ This is an application to simplify moderating a game of Name That Song that I ha
 
 The game is simple - a preview of a song is played and players may guess the name and artist of the song. A correct guess is awarded one point, while an incorrect guess comes with a penalty of one point. Players may abstain from answering to prevent losing a point. Correctness / incorrectness is determined by the moderator. The game is over when a player reaches 5 points with a 2 point lead.
 
-This application gives the ability to enter the names of all players, select an artist as a playlist seed, preview and remove songs from the playlist, play song previews, score players, and open a link to the full song on Spotify.
+This application gives the ability to enter the names of all players, select up to five artists as playlist seeds, preview and remove songs from the playlist, play song previews, score players, and open a link to the full song on Spotify.
 
 ## Requirements
 
@@ -50,11 +50,11 @@ When all players have been added, click "Finished Adding Players" to continue to
 
 ![Create Playlist Page](screenshots/create-playlist-page.png?raw=true)
 
-Provide a seed artist in the text input and click "Create Playlist" to query Spotify for recommendations based on that artist.
+Provide up to 5 seed artists in the text input. Separate each artist with a comma. Click "Create Playlist" to query Spotify for recommendations based on that artist(s).
 
 You can remove individual songs by clicking the "Remove" button in the same row as the song's name. 
 
-You can generate an entirely new playlist by providing a different artist and clicking "Create Playlist" again.
+You can generate an entirely new playlist by providing a different set of artists and clicking "Create Playlist" again.
 
 When you are happy with your playlist, click "Continue with this Playlist" to move on to the game screen.
 

@@ -16,6 +16,9 @@ export class CreatePlaylistComponent implements OnInit {
   artist = '';
   loading = false;
   errorMessage: MatSnackBarRef<SimpleSnackBar>;
+  errorOpts = {
+    duration: 5000
+  };
 
   constructor(
     private playlistService: PlaylistService,
@@ -39,7 +42,7 @@ export class CreatePlaylistComponent implements OnInit {
       this.errorMessage.dismiss();
     }
 
-    if (this.artist) {
+    if (this.artist && this.artist.split(',').length <= 5) {
       this.loading = true;
       this.playlistService
         .createPlaylist(this.artist)
@@ -53,9 +56,11 @@ export class CreatePlaylistComponent implements OnInit {
             this.playlist.data = playlist;
           },
           () => {
-            this.showError();
+            this.showServiceError();
           }
         );
+    } else {
+      this.showNumberOfArtistsError();
     }
   }
 
@@ -65,17 +70,23 @@ export class CreatePlaylistComponent implements OnInit {
       .subscribe(playlist => (this.playlist.data = playlist));
   }
 
-  showError() {
+  showServiceError() {
     this.errorMessage = this.snackBar.open(
       'Oops! Unable to retrieve a playlist for that artist',
       'Retry',
-      {
-        duration: 5000
-      }
+      this.errorOpts
     );
 
     this.errorMessage.onAction().subscribe(() => {
       this.createPlaylist();
     });
+  }
+
+  showNumberOfArtistsError() {
+    this.errorMessage = this.snackBar.open(
+      'Sorry! You must provide at least one artist and at most five',
+      null,
+      this.errorOpts
+    );
   }
 }
