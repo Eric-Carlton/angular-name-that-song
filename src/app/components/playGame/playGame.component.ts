@@ -97,9 +97,8 @@ export class PlayGameComponent implements OnInit {
     this.audioPlayer.pause();
 
     this.playlistService.getRandomSong(true).subscribe(song => {
-      this.currentSong = song;
-
-      if (this.currentSong) {
+      if (song) {
+        this.currentSong = song;
         this.audioPlayer.src = this.currentSong.previewUrl;
         this.audioPlayer.load();
         this.audioPlayer.play();
