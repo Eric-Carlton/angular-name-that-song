@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng build && node ./src/node/app.js | bunyan",
+    "start": "ng build --prod && node ./src/node/app.js | bunyan",
     "start:dev": "nodemon ./src/node/app.js | bunyan",
     "build": "ng build",
     "test": "ng test",
