@@ -33,9 +33,10 @@ export class CreatePlaylistComponent implements OnInit {
   }
 
   createPlaylist() {
+    this.clearPlaylist();
     this.artist = this.artist.trim();
-    if (this.snackBar) {
-      this.snackBar.dismiss();
+    if (this.errorMessage) {
+      this.errorMessage.dismiss();
     }
 
     if (this.artist) {
