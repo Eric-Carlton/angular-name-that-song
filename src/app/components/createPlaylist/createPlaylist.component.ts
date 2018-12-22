@@ -65,7 +65,7 @@ export class CreatePlaylistComponent implements OnInit {
           }
         );
     } else {
-      this.showSnackbar('You must provide at least one artist and at most 5');
+      this.showSnackbar('You must provide at least 1 artist and at most 5');
     }
   }
 
