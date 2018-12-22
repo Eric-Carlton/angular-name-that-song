@@ -100,4 +100,4 @@ Clicking "Yes" will take you back to the Create Playlist page and allow you to c
 
 Feel free to report any bugs or feature requests by opening an issue [here](https://github.com/Eric-Carlton/angular-name-that-song/issues/new).
 
-If you have any feature requests, feel free to open an issue. However, I can't guarantee I'll implement all requested features since I really just hacked this together as a game to play with my friends. If you feel very strongly about adding a feature, the fastest way to get it in would be to open an issue and the submit a pull request which resolves the issue.
+If you have any feature requests, feel free to open an issue. However, I can't guarantee I'll implement all requested features since I really just hacked this together as a game to play with my friends. If you feel very strongly about adding a feature, the fastest way to get it in would be to open an issue and then submit a pull request which resolves the issue.
