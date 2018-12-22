@@ -26,6 +26,10 @@ section {
     mat-card {
         text-align: center;
 
+        img {
+            max-width: 80%;
+        }
+
         a {
             text-decoration: none;
             color: black;

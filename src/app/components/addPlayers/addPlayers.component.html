@@ -1,14 +1,9 @@
 <section class="add-players">
   <h2>Add a player</h2>
   <form>
-    <mat-form-field>
-      <input
-        matInput
-        placeholder="Player's Name"
-        [(ngModel)]="newPlayer.name"
-        name="player-name"
-      />
-      <button mat-raised-button (click)="addPlayer()" color="primary">
+    <mat-form-field hintLabel="Player's Name">
+      <input matInput [(ngModel)]="newPlayer.name" name="player-name" />
+      <button matSuffix mat-raised-button (click)="addPlayer()" color="primary">
         Add
       </button>
     </mat-form-field>
