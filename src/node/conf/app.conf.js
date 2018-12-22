@@ -2,7 +2,7 @@
 
 module.exports = {
   express: {
-    port: 3000,
+    port: process.env.PORT || 3000,
     middlewarePath: 'middleware',
     routesPath: 'routes',
     apiRoutesPrefix: '/api',
