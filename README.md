@@ -8,10 +8,14 @@ The game is simple - a preview of a song is played and players may guess the nam
 
 This application gives the ability to enter the names of all players, select up to five artists as playlist seeds, preview and remove songs from the playlist, play song previews, score players, and open a link to the full song on Spotify.
 
+## Live Demo
+
+https://name-that-song.herokuapp.com
+
 ## Requirements
 
 * [NodeJS](https://nodejs.org/en/download/) v8+ 
-    - Originally built with v11.4.0, but should be compatible with as low as  v8
+    - Originally built with v11.4.0, but should be compatible with as low as v8
 
 ## Setup
 
