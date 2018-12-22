@@ -7,3 +7,30 @@ em {
     font-weight: bold;
     font-style: normal;
  }
+
+form, mat-form-field, table { 
+    width: 100%;
+}
+
+form {
+    button.mat-primary {
+        width: 40%;
+        flex: 2;
+    }
+
+    input.mat-input-element {
+        width: 60%;
+        flex: 3;
+    }
+}
+
+.table-container {
+    overflow: auto;
+    max-height: 350px; 
+}
+
+button.btn-continue {
+    display: block;
+    min-width: 50%;
+    margin: 3em auto;
+}  

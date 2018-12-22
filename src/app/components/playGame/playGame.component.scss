@@ -1,7 +1,21 @@
+:host {
+    display: flex;
+    height: 100%;
+    flex-wrap: wrap;
+}
+
+section {
+    width: auto;
+    margin: 0 2em;
+    flex: 1 1 40%;
+}
+
 .scoring {
+    .table-container {
+        max-height: 460px;
+    }
+
     table {
-        width: 100%;
-    
         td, th {
             text-align: center;
         }
@@ -18,9 +32,7 @@
         }
     }
 
-    .btn-start-game {
-        display: block;
-        margin: 3em auto;
+    .btn-continue {
         width: 100%;
     }
 }

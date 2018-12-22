@@ -1,29 +1,7 @@
-form, mat-form-field, table { 
-    width: 100%;
-}
-
-form {
-        button {
-            width: 33%;
-            flex: 1;
-        }
-
-        input {
-            width: 67%;
-            flex: 2;
-        }
-}
-
 section.player-list {
     table {
         .mat-column-remove {
             text-align: right;
         }
     }
-}
-
-.btn-continue {
-    display: block;
-    min-width: 50%;
-    margin: 3em auto;
 }
