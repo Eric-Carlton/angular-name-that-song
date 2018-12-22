@@ -1,5 +1,21 @@
 'use strict';
 
+const bunyan = require('bunyan'),
+  log = bunyan.createLogger({
+    name: 'app.conf.js',
+    level: 'info'
+  });
+
+let privateConf;
+
+try {
+  log.info('Using private conf');
+
+  privateConf = require('./private.conf');
+} catch (e) {
+  log.info('No private conf found');
+}
+
 module.exports = {
   express: {
     port: process.env.PORT || 3000,
@@ -20,9 +36,15 @@ module.exports = {
   },
   csurf: { cookie: true },
   log: {
-    level: 'trace'
+    level: process.env.LOG_LEVEL || 'trace'
   },
   spotify: {
+    clientId: privateConf
+      ? privateConf.spotify.clientId
+      : process.env.SPOTIFY_CLIENT_ID,
+    clientSecret: privateConf
+      ? privateConf.spotify.clientSecret
+      : process.env.SPOTIFY_CLIENT_SECRET,
     tokenCacheOpts: {
       stdTTL: 3550
     },

@@ -1,7 +1,6 @@
 'use strict';
 
-const privateConf = require('../conf/private.conf'),
-  conf = require('../conf/app.conf'),
+const conf = require('../conf/app.conf'),
   request = require('request'),
   NodeCache = require('node-cache'),
   tokenCache = new NodeCache(conf.spotify.tokenCacheOpts),
@@ -45,7 +44,7 @@ class SpotifyAuth {
       Authorization:
         'Basic ' +
         new Buffer(
-          privateConf.spotify.clientId + ':' + privateConf.spotify.clientSecret
+          conf.spotify.clientId + ':' + conf.spotify.clientSecret
         ).toString('base64')
     };
   }
