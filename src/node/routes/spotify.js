@@ -32,13 +32,27 @@ class SpotifyRoute {
 
     Promise.all(promises)
       .then(artistIdsArr => {
-        if (artistIdsArr && artistIdsArr.length > 0) {
+        log.debug(
+          `All artists to query for recommendations for ${req.headers.reqid}`,
+          artistIdsArr
+        );
+
+        if (
+          artistIdsArr &&
+          artistIdsArr.length > 0 &&
+          artistIdsArr.every(artistId => artistId)
+        ) {
           const recommendationsSrvc = new SpotifyArtistRecommendations(
               req.headers.reqid
             ),
             artistIds = artistIdsArr
               .filter(artist => artist && artist.length > 0)
               .join(',');
+
+          log.debug(
+            `Artists concatenated as string for ${req.headers.reqid}`,
+            artistIds
+          );
 
           return recommendationsSrvc.getRecommendationsForArtistId(artistIds);
         } else {

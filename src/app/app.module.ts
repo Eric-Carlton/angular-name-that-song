@@ -13,7 +13,8 @@ import {
   MatDialogModule,
   MatSnackBarModule,
   MatIconRegistry,
-  MatIconModule
+  MatIconModule,
+  MAT_SNACK_BAR_DEFAULT_OPTIONS
 } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 
@@ -51,7 +52,9 @@ import { WinnerDialogComponent } from './components/winnerDialog/winnerDialog.co
     MatSnackBarModule,
     MatIconModule
   ],
-  providers: [],
+  providers: [
+    { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 5000 } }
+  ],
   bootstrap: [AppComponent],
   entryComponents: [OutOfSongsDialogComponent, WinnerDialogComponent]
 })

@@ -89,6 +89,9 @@ class SpotifyAuth {
       const token = `Bearer ${body.access_token}`;
 
       tokenCache.set(conf.spotify.tokenCacheKey, token);
+
+      log.debug(`Spotify token response for ${reqid} mapped:`, token);
+
       resolve(token);
     } else {
       log.error(`Error retrieving Spotify token for ${reqid}`, err, body);

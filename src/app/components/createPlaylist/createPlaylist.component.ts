@@ -15,10 +15,6 @@ export class CreatePlaylistComponent implements OnInit {
   playlist: MatTableDataSource<Song> = new MatTableDataSource<Song>();
   artist = '';
   loading = false;
-  errorMessage: MatSnackBarRef<SimpleSnackBar>;
-  errorOpts = {
-    duration: 5000
-  };
 
   constructor(
     private playlistService: PlaylistService,
@@ -38,9 +34,7 @@ export class CreatePlaylistComponent implements OnInit {
   createPlaylist() {
     this.clearPlaylist();
     this.artist = this.artist.trim();
-    if (this.errorMessage) {
-      this.errorMessage.dismiss();
-    }
+    this.snackBar.dismiss();
 
     if (this.artist && this.artist.split(',').length <= 5) {
       this.loading = true;
@@ -55,12 +49,23 @@ export class CreatePlaylistComponent implements OnInit {
           playlist => {
             this.playlist.data = playlist;
           },
-          () => {
-            this.showServiceError();
+          e => {
+            console.log(e.status);
+            if (e.status === 404) {
+              this.showSnackbar('Unable to find any matching artists');
+            } else {
+              this.showSnackbar(
+                'An error occurred while creating a playlist',
+                'Retry',
+                () => {
+                  this.createPlaylist();
+                }
+              );
+            }
           }
         );
     } else {
-      this.showNumberOfArtistsError();
+      this.showSnackbar('You must provide at least one artist and at most 5');
     }
   }
 
@@ -70,23 +75,11 @@ export class CreatePlaylistComponent implements OnInit {
       .subscribe(playlist => (this.playlist.data = playlist));
   }
 
-  showServiceError() {
-    this.errorMessage = this.snackBar.open(
-      'Oops! Unable to retrieve a playlist for that artist',
-      'Retry',
-      this.errorOpts
-    );
+  showSnackbar(message, action?, actionHandler?) {
+    const snackBar = this.snackBar.open(message, action);
 
-    this.errorMessage.onAction().subscribe(() => {
-      this.createPlaylist();
-    });
-  }
-
-  showNumberOfArtistsError() {
-    this.errorMessage = this.snackBar.open(
-      'Sorry! You must provide at least one artist and at most five',
-      null,
-      this.errorOpts
-    );
+    if (actionHandler) {
+      snackBar.onAction().subscribe(actionHandler);
+    }
   }
 }

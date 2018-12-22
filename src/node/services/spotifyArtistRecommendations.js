@@ -106,6 +106,11 @@ class SpotifyArtistRecommendations {
         recommendationsCache.set(cacheKey, tracks);
       }
 
+      log.debug(
+        `Spotify recommendations response for ${this.reqid} mapped`,
+        tracks
+      );
+
       resolve(tracks);
     } else {
       log.error(

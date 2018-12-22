@@ -93,6 +93,11 @@ class SpotifySearchArtist {
         artistCache.set(cacheKey, artistId);
       }
 
+      log.debug(
+        `Spotify artist search response for ${this.reqid} mapped`,
+        artistId
+      );
+
       resolve(artistId);
     } else {
       log.error(
