@@ -31,7 +31,7 @@ This application gives the ability to enter the names of all players, select up 
         }
     }
     ```
-5. Run `npm start` to build the angular applicaton and start the server
+5. Run `npm run build && npm start` to build the angular applicaton and start the server
 6. The application can be accessed at http://localhost:3000
 
 ## Usage

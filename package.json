@@ -3,15 +3,17 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng build --prod && node ./src/node/app.js | bunyan",
+    "start": "node ./src/node/app.js | bunyan",
     "start:dev": "nodemon ./src/node/app.js | bunyan",
-    "build": "ng build",
+    "build": "ng build --prod",
+    "build:dev": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "lint:node": "eslint --fix 'src/node/**/*.{js,json}'",
     "prettier:node": "prettier --write 'src/node/**/*.{js,json}'",
     "prettier:angular": "prettier --write 'src/app/**/*.{ts,json,md,html}'",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "heroku-postbuild": "ng build --prod"
   },
   "private": true,
   "dependencies": {
@@ -19,6 +21,7 @@
     "@angular/cdk": "~7.2.0",
     "@angular/common": "~7.1.0",
     "@angular/compiler": "~7.1.0",
+    "@angular/compiler-cli": "~7.1.0",
     "@angular/core": "~7.1.0",
     "@angular/forms": "~7.1.0",
     "@angular/material": "^7.2.0",
@@ -48,7 +51,7 @@
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.11.0",
     "@angular/cli": "~7.1.3",
-    "@angular/compiler-cli": "~7.1.0",
+    
     "@angular/language-service": "~7.1.0",
     "@types/jasmine": "~2.8.8",
     "@types/jasminewd2": "~2.0.3",
