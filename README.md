@@ -10,7 +10,7 @@ This application gives the ability to enter the names of all players, select up 
 
 ## Live Demo
 
-https://name-that-song.herokuapp.com
+http://www.namethatsong.io
 
 ## Requirements
 
