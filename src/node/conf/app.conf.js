@@ -9,9 +9,8 @@ const bunyan = require('bunyan'),
 let privateConf;
 
 try {
-  log.info('Using private conf');
-
   privateConf = require('./private.conf');
+  log.info('Using private conf');
 } catch (e) {
   log.info('No private conf found');
 }
