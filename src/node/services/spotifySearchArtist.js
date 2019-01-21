@@ -86,23 +86,32 @@ class SpotifySearchArtist {
       { res: body }
     );
 
-    if (!err && res.statusCode === 200) {
-      const artistId = jsonpath.query(body, '$.artists.items.*.id')[0];
+    try {
+      if (!err && res.statusCode === 200) {
+        const artistId = jsonpath.query(body, '$.artists.items.*.id')[0];
 
-      if (artistId) {
-        artistCache.set(cacheKey, artistId);
+        if (artistId) {
+          artistCache.set(cacheKey, artistId);
+        }
+
+        log.debug(
+          `Spotify artist search response for ${this.reqid} mapped`,
+          artistId
+        );
+
+        resolve(artistId);
+      } else {
+        log.error(
+          `Error retrieving Spotify artist id for ${this.reqid}`,
+          err,
+          body
+        );
+        reject(new Error('Unable to get Spotify artist id'));
       }
-
-      log.debug(
-        `Spotify artist search response for ${this.reqid} mapped`,
-        artistId
-      );
-
-      resolve(artistId);
-    } else {
+    } catch (e) {
       log.error(
-        `Error retrieving Spotify artist id for ${this.reqid}`,
-        err,
+        `Error mapping Spotify artist response for ${this.reqid}`,
+        e,
         body
       );
       reject(new Error('Unable to get Spotify artist id'));

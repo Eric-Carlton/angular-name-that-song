@@ -86,39 +86,48 @@ class SpotifyArtistRecommendations {
       { res: body }
     );
 
-    if (!err && res.statusCode === 200) {
-      const tracks = jsonpath
-        .query(body, '$.tracks')[0]
-        .map(track => {
-          return {
-            artist: jsonpath.query(track, '$.artists..name')[0],
-            name: jsonpath.query(track, '$.name')[0],
-            previewUrl: jsonpath.query(track, '$.preview_url')[0],
-            album: jsonpath.query(track, '$.album.name')[0],
-            // medium sized art is always second in array
-            albumArtUrl: jsonpath.query(track, '$.album.images[1]')[0].url,
-            songUrl: jsonpath.query(track, '$.external_urls.spotify')[0]
-          };
-        })
-        .filter(track => track.previewUrl);
+    try {
+      if (!err && res.statusCode === 200) {
+        const tracks = jsonpath
+          .query(body, '$.tracks')[0]
+          .map(track => {
+            return {
+              artist: jsonpath.query(track, '$.artists..name')[0],
+              name: jsonpath.query(track, '$.name')[0],
+              previewUrl: jsonpath.query(track, '$.preview_url')[0],
+              album: jsonpath.query(track, '$.album.name')[0],
+              // medium sized art is always second in array
+              albumArtUrl: jsonpath.query(track, '$.album.images[1].url')[0],
+              songUrl: jsonpath.query(track, '$.external_urls.spotify')[0]
+            };
+          })
+          .filter(track => track.artist && track.name && track.previewUrl);
 
-      if (tracks.length > 0) {
-        recommendationsCache.set(cacheKey, tracks);
+        if (tracks.length > 0) {
+          recommendationsCache.set(cacheKey, tracks);
+        }
+
+        log.debug(
+          `Spotify recommendations response for ${this.reqid} mapped`,
+          tracks
+        );
+
+        resolve(tracks);
+      } else {
+        log.error(
+          `Error retrieving Spotify recommendations for ${this.reqid}`,
+          err,
+          body
+        );
+        reject(new Error('Unable to get Spotify recommendations'));
       }
-
-      log.debug(
-        `Spotify recommendations response for ${this.reqid} mapped`,
-        tracks
-      );
-
-      resolve(tracks);
-    } else {
+    } catch (e) {
       log.error(
-        `Error retrieving Spotify artist id for ${this.reqid}`,
+        `Error mapping Spotify recommendations for ${this.reqid}`,
         err,
         body
       );
-      reject(new Error('Unable to get Spotify artist id'));
+      reject(new Error('Unable to get Spotify recommendations'));
     }
   }
 }
