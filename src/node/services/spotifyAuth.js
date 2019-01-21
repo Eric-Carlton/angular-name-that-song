@@ -84,16 +84,21 @@ class SpotifyAuth {
       { res: body }
     );
 
-    if (!err && res.statusCode === 200 && body.access_token) {
-      const token = `Bearer ${body.access_token}`;
+    try {
+      if (!err && res.statusCode === 200 && body.access_token) {
+        const token = `Bearer ${body.access_token}`;
 
-      tokenCache.set(conf.spotify.tokenCacheKey, token);
+        tokenCache.set(conf.spotify.tokenCacheKey, token);
 
-      log.debug(`Spotify token response for ${reqid} mapped:`, token);
+        log.debug(`Spotify token response for ${reqid} mapped:`, token);
 
-      resolve(token);
-    } else {
-      log.error(`Error retrieving Spotify token for ${reqid}`, err, body);
+        resolve(token);
+      } else {
+        log.error(`Error retrieving Spotify token for ${reqid}`, err, body);
+        reject(new Error('Unable to get Spotify token'));
+      }
+    } catch (e) {
+      log.error(`Error mapping Spotify token for ${reqid}`, e, body);
       reject(new Error('Unable to get Spotify token'));
     }
   }
