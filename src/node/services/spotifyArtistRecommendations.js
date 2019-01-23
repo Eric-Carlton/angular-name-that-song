@@ -45,7 +45,9 @@ class SpotifyArtistRecommendations {
   getParams(artistId) {
     return {
       seed_artists: artistId,
-      limit: 100
+      limit: 100,
+      // filter out all instrumental tracks
+      max_instrumentalness: 0.35
     };
   }
 
