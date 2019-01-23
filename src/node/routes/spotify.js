@@ -37,11 +37,10 @@ class SpotifyRoute {
           artistIdsArr
         );
 
-        if (
-          artistIdsArr &&
-          artistIdsArr.length > 0 &&
-          artistIdsArr.every(artistId => artistId)
-        ) {
+        // filter out any undefined artists
+        artistIdsArr = artistIdsArr.filter(artistId => artistId);
+
+        if (artistIdsArr && artistIdsArr.length > 0) {
           const recommendationsSrvc = new SpotifyArtistRecommendations(
               req.headers.reqid
             ),
