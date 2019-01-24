@@ -47,7 +47,9 @@ class SpotifyArtistRecommendations {
       seed_artists: artistId,
       limit: 100,
       // filter out all instrumental tracks
-      max_instrumentalness: 0.35
+      max_instrumentalness: 0.35,
+      // don't pick anything too obscure
+      min_popularity: 35
     };
   }
 
