@@ -2,20 +2,19 @@ import { BrowserModule, DomSanitizer } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconRegistry, MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import {
-  MatButtonModule,
-  MatFormFieldModule,
-  MatInputModule,
-  MatCardModule,
-  MatTableModule,
-  MatToolbarModule,
-  MatProgressSpinnerModule,
-  MatDialogModule,
   MatSnackBarModule,
-  MatIconRegistry,
-  MatIconModule,
   MAT_SNACK_BAR_DEFAULT_OPTIONS
-} from '@angular/material';
+} from '@angular/material/snack-bar';
+import { MatTableModule } from '@angular/material/table';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';

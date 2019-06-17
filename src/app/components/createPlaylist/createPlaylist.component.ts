@@ -4,7 +4,11 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Song } from '../../models/song.model';
 import { PlaylistService } from 'app/services/playlist.service';
 import { finalize } from 'rxjs/operators';
-import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material';
+import {
+  MatSnackBar,
+  MatSnackBarRef,
+  SimpleSnackBar
+} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-create-playlist',

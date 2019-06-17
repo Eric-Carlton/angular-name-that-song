@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { Player } from 'app/models/player.model';
 
@@ -51,9 +51,7 @@ export class WinnerDialogComponent implements OnInit {
     } else {
       const winner = this.data.winners[0];
 
-      this.content = `The winner was <em>${winner.name}</em> with <em>${
-        winner.score
-      }</em> points!`;
+      this.content = `The winner was <em>${winner.name}</em> with <em>${winner.score}</em> points!`;
     }
   }
 

@@ -7,7 +7,11 @@ import { PlaylistService } from '../../services/playlist.service';
 
 import { Player } from '../../models/player.model';
 import { Song } from '../../models/song.model';
-import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material';
+import {
+  MatDialog,
+  MatDialogConfig,
+  MatDialogRef
+} from '@angular/material/dialog';
 import { OutOfSongsDialogComponent } from '../outOfSongsDialog/outOfSongsDialog.component';
 import { WinnerDialogComponent } from '../winnerDialog/winnerDialog.component';
 
