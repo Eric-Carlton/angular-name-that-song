@@ -6,7 +6,7 @@
     "start": "node ./src/node/app.js | bunyan",
     "start:dev": "nodemon ./src/node/app.js | bunyan",
     "build": "ng build --prod",
-    "build:dev": "ng build",
+    "build:dev": "ng build --aot",
     "test": "ng test",
     "lint": "ng lint",
     "lint:node": "eslint --fix 'src/node/**/*.{js,json}'",
@@ -76,7 +76,7 @@
     "typescript": "~3.4.5"
   },
   "engines": {
-    "node": "10.x"
+    "node": "12.x"
   },
   "husky": {
     "hooks": {
